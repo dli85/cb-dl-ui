@@ -1,0 +1,14 @@
+.centered-container {
+  position: absolute;
+  top: 40%;
+  left: calc(50% + 100px); /* Adjust based on sidebar width */
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .centered-container {
+    left: 50%; /* Adjust centering for smaller screens */
+  }
+}

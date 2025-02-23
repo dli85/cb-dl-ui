@@ -1,0 +1,14 @@
+.centered-container-search {
+  position: absolute;
+  top: 200px;
+  left: 650px;
+  /* transform: translate(-50%, -50%); */
+  width: 100%;
+  position: fixed;
+}
+
+@media (max-width: 768px) {
+  .centered-container-search {
+    left: 50%; /* Adjust centering for smaller screens */
+  }
+}
