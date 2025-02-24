@@ -1,12 +1,15 @@
 import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import Comic from "../../models/ComicModels";
+import { useNavigate } from "react-router-dom";
 
 export interface SearchComicListItemProps {
   comic: Comic;
+  getIssuesById: (id: number, link: string) => void;
 }
 
 const SearchComicListItem = (props: SearchComicListItemProps) => {
-  const { comic } = props;
+  const navigate = useNavigate();
+  const { comic, getIssuesById } = props;
   return (
     <Box
       border="2px solid #000"
@@ -29,7 +32,14 @@ const SearchComicListItem = (props: SearchComicListItemProps) => {
             <Box fontSize="sm">Number of issues: {comic.number_issues}</Box>
           </HStack>
         </VStack>
-        <Button ml="auto" bg="green">
+        <Button
+          ml="auto"
+          bg="green"
+          onClick={() => {
+            getIssuesById(comic.id, comic.link);
+            navigate("/view-comic");
+          }}
+        >
           View Issues
         </Button>
       </HStack>

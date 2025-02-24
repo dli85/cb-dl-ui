@@ -11,11 +11,18 @@ import {
   Alert,
   CloseButton,
 } from "@chakra-ui/react";
-import { SearchComicsByTitle } from "../../services/ComicService";
+import { searchComicsByTitle } from "../../services/ComicService";
 import Comic from "../../models/ComicModels";
-import { parseAddComicResponse } from "../../Util/ComicUtil";
+import { parseListOfComicsResponse } from "../../Util/ComicUtil";
 import SearchComicListItem from "./ListItem";
-const SearchComics = () => {
+
+interface SearchComicsProps {
+  getIssuesById: (id: number, link: string) => void;
+}
+
+const SearchComics = (props: SearchComicsProps) => {
+  const { getIssuesById } = props;
+
   const [title, setTitle] = useState("");
   const [comics, setComics] = useState<Comic[]>([]);
 
@@ -31,7 +38,9 @@ const SearchComics = () => {
 
     const delayDebounceFn = setTimeout(async () => {
       console.log(title);
-      const results = parseAddComicResponse(await SearchComicsByTitle(title));
+      const results = parseListOfComicsResponse(
+        await searchComicsByTitle(title)
+      );
       if (!("error" in results)) {
         setComics(results);
       }
@@ -74,7 +83,11 @@ const SearchComics = () => {
         position="relative"
       >
         {comics.map((comic) => (
-          <SearchComicListItem key={comic.id} comic={comic} />
+          <SearchComicListItem
+            key={comic.id}
+            comic={comic}
+            getIssuesById={getIssuesById}
+          />
         ))}
       </Box>
     </Box>

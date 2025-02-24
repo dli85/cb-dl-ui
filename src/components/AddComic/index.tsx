@@ -14,7 +14,7 @@ import {
   addSingleNewComic,
   addOrUpdateSingleComic,
 } from "../../services/RcoliService";
-import { parseAddComicResponse } from "../../Util/ComicUtil";
+import { parseListOfComicsResponse } from "../../Util/ComicUtil";
 
 const AddComic = () => {
   const [url, setUrl] = useState("");
@@ -25,7 +25,7 @@ const AddComic = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const addSingleComic = async () => {
-    const response = parseAddComicResponse(await addSingleNewComic(url));
+    const response = parseListOfComicsResponse(await addSingleNewComic(url));
     if (
       "error" in response &&
       (response.error as string).includes("duplicate")
@@ -45,7 +45,9 @@ const AddComic = () => {
   };
 
   const addOrUpdateComic = async () => {
-    const response = parseAddComicResponse(await addOrUpdateSingleComic(url));
+    const response = parseListOfComicsResponse(
+      await addOrUpdateSingleComic(url)
+    );
     if ("error" in response) {
       setErrorMessage("Error: " + response.error);
       setErrorType("failure");
