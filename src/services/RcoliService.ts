@@ -14,7 +14,6 @@ export const addSingleNewComic = async (
       body: JSON.stringify({ urls: [url] }),
     });
     if (!response) {
-      console.log("got here");
       return { error: "Failed to connect to server" };
     }
 
@@ -39,6 +38,29 @@ export const addOrUpdateSingleComic = async (
         body: JSON.stringify({ urls: [url] }),
       }
     );
+
+    if (!response) {
+      return { error: "Failed to connect to server" };
+    }
+
+    const data = response.json();
+    return data;
+  } catch (error) {
+    return { error: `Fetch error: ${error}` };
+  }
+};
+
+export const addPagesMissingIssues = async (
+  issue_requests: any[]
+): Promise<any> => {
+  try {
+    const response = await fetch(`${API_URL}/rcoli/add_pages_missing_issues`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ issue_requests }),
+    });
 
     if (!response) {
       return { error: "Failed to connect to server" };

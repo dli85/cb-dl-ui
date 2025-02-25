@@ -37,15 +37,13 @@ const SearchComics = (props: SearchComicsProps) => {
     }
 
     const delayDebounceFn = setTimeout(async () => {
-      console.log(title);
       const results = parseListOfComicsResponse(
         await searchComicsByTitle(title)
       );
       if (!("error" in results)) {
         setComics(results);
       }
-      console.log(results);
-    }, 300); // Adding a debounce delay
+    }, 300);
 
     return () => clearTimeout(delayDebounceFn);
   }, [title]);

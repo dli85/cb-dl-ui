@@ -28,3 +28,13 @@ export const parseListOfIssuesResponse = (data: any): GetIssuesResponse => {
 
   return { error: "Invalid response format" };
 };
+
+export const validateAddMissingPagesResponse = (data: any) => {
+  if ("error" in data) {
+    return { error: data.error };
+  } else if ("successes" in data && "failures" in data) {
+    return data;
+  } else {
+    return { error: "unrecognized response add missing pages response format" };
+  }
+};

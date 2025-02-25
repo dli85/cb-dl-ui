@@ -11,6 +11,8 @@ import SearchComics from "./components/SearchComics";
 import useViewComic from "./hooks/useViewComic";
 import ViewComic from "./components/ViewComic";
 import { error } from "console";
+import CreateJob from "./components/CreateJob";
+import useCreateJob from "./hooks/useCreateJob";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -32,6 +34,22 @@ const App = () => {
     getIssuesByLink,
   } = useViewComic();
 
+  const {
+    jobName,
+    setJobName,
+    issuesWorkload,
+    setIssuesWorkload,
+    addIssuesToJob,
+    updateIssueWorkloadItem,
+    deleteIssueById,
+    jobErrorMessage,
+    jobErrorType,
+    jobErrorVisible,
+    setJobErrorVisible,
+    clearAll,
+    createAndStartJob,
+  } = useCreateJob();
+
   return (
     <ChakraProvider value={system}>
       <Router>
@@ -40,7 +58,26 @@ const App = () => {
           <div style={{ marginLeft: "250px", padding: "20px", flex: 1 }}>
             <Routes>
               <Route path="/download-jobs" element={<DownloadJobs />} />
-              <Route path="/create-job" element={<h1>Create Job Page</h1>} />
+              <Route
+                path="/create-job"
+                element={
+                  <CreateJob
+                    jobName={jobName}
+                    setJobName={setJobName}
+                    issuesWorkload={issuesWorkload}
+                    setIssuesWorkload={setIssuesWorkload}
+                    addIssuesToJob={addIssuesToJob}
+                    updateIssueWorkloadItem={updateIssueWorkloadItem}
+                    deleteIssueById={deleteIssueById}
+                    jobErrorMessage={jobErrorMessage}
+                    jobErrorType={jobErrorType}
+                    jobErrorVisible={jobErrorVisible}
+                    setJobErrorVisible={setJobErrorVisible}
+                    clearAll={clearAll}
+                    createAndStartJob={createAndStartJob}
+                  />
+                }
+              />
               <Route
                 path="/search-comics"
                 element={<SearchComics getIssuesById={getIssuesById} />}
@@ -60,6 +97,7 @@ const App = () => {
                     updateIssueItem={updateIssueItem}
                     updateAllIssueItems={updateAllIssueItems}
                     getIssuesByLink={getIssuesByLink}
+                    addIssuesToJob={addIssuesToJob}
                   />
                 }
               />

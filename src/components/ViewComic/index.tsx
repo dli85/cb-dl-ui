@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Issue } from "../../models/ComicModels";
 import IssueItem from "./IssueItem";
 import { ViewIssueItem } from "../../hooks/useViewComic";
+import { useNavigate } from "react-router-dom";
 
 export interface ViewComicProps {
   url: string;
@@ -26,6 +27,7 @@ export interface ViewComicProps {
   updateIssueItem: (id: number, updates: Partial<ViewIssueItem>) => void;
   updateAllIssueItems: (updates: Partial<ViewIssueItem>) => void;
   getIssuesByLink: (link: string) => void;
+  addIssuesToJob: (issues: ViewIssueItem[]) => void;
 }
 
 const ViewComic = (props: ViewComicProps) => {
@@ -41,7 +43,9 @@ const ViewComic = (props: ViewComicProps) => {
     updateIssueItem,
     updateAllIssueItems,
     getIssuesByLink,
+    addIssuesToJob,
   } = props;
+  const navigate = useNavigate();
   return (
     <Box
       className="centered-container-search"
@@ -125,7 +129,18 @@ const ViewComic = (props: ViewComicProps) => {
           />
         ))}
       </Box>
-      <Button bg="green">Add to Download Job</Button>
+      <Button
+        mt="10px"
+        bg="green"
+        onClick={() => {
+          if (issues) {
+            addIssuesToJob(issues);
+            navigate("/create-job");
+          }
+        }}
+      >
+        Add to Download Job
+      </Button>
     </Box>
   );
 };

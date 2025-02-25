@@ -1,5 +1,7 @@
 import { useState } from "react";
 import {
+  getComicById,
+  getComicByLink,
   getIssuesByComicId,
   getIssuesByComicLink,
 } from "../services/ComicService";
@@ -9,6 +11,7 @@ import { Issue } from "../models/ComicModels";
 export interface ViewIssueItem extends Issue {
   checked: boolean;
   hq: boolean;
+  comic_title: string;
 }
 
 const useViewComic = () => {
@@ -20,7 +23,13 @@ const useViewComic = () => {
 
   const getIssuesById = async (id: number, link: string) => {
     const response = parseListOfIssuesResponse(await getIssuesByComicId(id));
-    console.log(response);
+    const comic = await getComicById(id);
+
+    if ("error" in comic) {
+      setErrorMessage("Error: " + comic.error);
+      setErrorType("failure");
+      setIsVisible(true);
+    }
 
     if ("error" in response) {
       setErrorMessage("Error: " + response.error);
@@ -31,6 +40,7 @@ const useViewComic = () => {
         ...issue,
         checked: true,
         hq: false,
+        comic_title: comic.title,
       }));
 
       setIssues(issueItems);
@@ -42,7 +52,13 @@ const useViewComic = () => {
     const response = parseListOfIssuesResponse(
       await getIssuesByComicLink(link)
     );
-    console.log(response);
+    const comic = await getComicByLink(link);
+
+    if ("error" in comic) {
+      setErrorMessage("Error: " + comic.error);
+      setErrorType("failure");
+      setIsVisible(true);
+    }
 
     if ("error" in response) {
       setErrorMessage("Error: " + response.error);
@@ -53,6 +69,7 @@ const useViewComic = () => {
         ...issue,
         checked: true,
         hq: false,
+        comic_title: comic.title,
       }));
 
       setIssues(issueItems);
