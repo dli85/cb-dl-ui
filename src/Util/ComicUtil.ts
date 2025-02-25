@@ -1,4 +1,8 @@
-import { AddComicResponse, GetIssuesResponse } from "../models/ComicModels";
+import {
+  AddComicResponse,
+  GetDownloadJobsResponse,
+  GetIssuesResponse,
+} from "../models/ComicModels";
 import Comic, { Issue } from "../models/ComicModels";
 
 export const parseListOfComicsResponse = (data: any): AddComicResponse => {
@@ -36,5 +40,23 @@ export const validateAddMissingPagesResponse = (data: any) => {
     return data;
   } else {
     return { error: "unrecognized response add missing pages response format" };
+  }
+};
+
+export const parseGetDownloadJobs = (data: any): GetDownloadJobsResponse => {
+  if ("error" in data) {
+    return { error: data.error };
+  } else if (
+    "complete" in data &&
+    "incomplete" in data &&
+    Array.isArray(data.complete) &&
+    Array.isArray(data.incomplete)
+  ) {
+    return {
+      complete: data.complete,
+      incomplete: data.incomplete,
+    };
+  } else {
+    return { error: "Unrecognized get download jobs response" };
   }
 };

@@ -116,7 +116,7 @@ const ViewComic = (props: ViewComicProps) => {
         maxHeight="600px"
         overflowY="auto"
         width="100%"
-        bg="gray.50"
+        bg="white"
         p={2}
         borderRadius="md"
         position="relative"
