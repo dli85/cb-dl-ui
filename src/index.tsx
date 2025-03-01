@@ -13,6 +13,7 @@ import ViewComic from "./components/ViewComic";
 import { error } from "console";
 import CreateJob from "./components/CreateJob";
 import useCreateJob from "./hooks/useCreateJob";
+import useBookmark from "./hooks/useBookmark";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,6 +23,7 @@ const App = () => {
   const {
     url,
     setUrl,
+    comic,
     issues,
     setIssues,
     getIssuesById,
@@ -32,6 +34,7 @@ const App = () => {
     updateIssueItem,
     updateAllIssueItems,
     getIssuesByLink,
+    clearIssues,
   } = useViewComic();
 
   const {
@@ -49,6 +52,14 @@ const App = () => {
     clearAll,
     createAndStartJob,
   } = useCreateJob();
+
+  const {
+    bookmarks,
+    addBookmark,
+    removeBookmark,
+    getBookmarkById,
+    containsBookmark,
+  } = useBookmark();
 
   return (
     <ChakraProvider value={system}>
@@ -89,6 +100,7 @@ const App = () => {
                     url={url}
                     setUrl={setUrl}
                     issues={issues}
+                    comic={comic}
                     setIssues={setIssues}
                     errorMessage={errorMessage}
                     errorType={errorType}
@@ -98,6 +110,13 @@ const App = () => {
                     updateAllIssueItems={updateAllIssueItems}
                     getIssuesByLink={getIssuesByLink}
                     addIssuesToJob={addIssuesToJob}
+                    bookmarks={bookmarks}
+                    addBookmark={addBookmark}
+                    removeBookmark={removeBookmark}
+                    getBookmarkById={getBookmarkById}
+                    containsBookmark={containsBookmark}
+                    clearIssues={clearIssues}
+                    getIssuesById={getIssuesById}
                   />
                 }
               />

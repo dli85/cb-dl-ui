@@ -6,7 +6,7 @@ import {
   getIssuesByComicLink,
 } from "../services/ComicService";
 import { parseListOfIssuesResponse } from "../Util/ComicUtil";
-import { Issue } from "../models/ComicModels";
+import Comic, { Issue } from "../models/ComicModels";
 
 export interface ViewIssueItem extends Issue {
   checked: boolean;
@@ -16,6 +16,7 @@ export interface ViewIssueItem extends Issue {
 
 const useViewComic = () => {
   const [url, setUrl] = useState<string>("");
+  const [comic, setComic] = useState<Comic | undefined>(undefined);
   const [issues, setIssues] = useState<ViewIssueItem[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [errorType, setErrorType] = useState<"failure" | "success">("failure");
@@ -38,13 +39,14 @@ const useViewComic = () => {
     } else {
       const issueItems: ViewIssueItem[] = response.map((issue: Issue) => ({
         ...issue,
-        checked: true,
+        checked: false,
         hq: false,
         comic_title: comic.title,
       }));
 
       setIssues(issueItems);
       setUrl(link);
+      setComic(comic);
     }
   };
 
@@ -67,13 +69,14 @@ const useViewComic = () => {
     } else {
       const issueItems: ViewIssueItem[] = response.map((issue: Issue) => ({
         ...issue,
-        checked: true,
+        checked: false,
         hq: false,
         comic_title: comic.title,
       }));
 
       setIssues(issueItems);
       setUrl(link);
+      setComic(comic);
     }
   };
 
@@ -94,9 +97,16 @@ const useViewComic = () => {
     );
   };
 
+  const clearIssues = () => {
+    setIssues([]);
+    setUrl("");
+    setComic(undefined);
+  };
+
   return {
     url,
     setUrl,
+    comic,
     issues,
     setIssues,
     getIssuesById,
@@ -107,6 +117,7 @@ const useViewComic = () => {
     updateIssueItem,
     updateAllIssueItems,
     getIssuesByLink,
+    clearIssues,
   };
 };
 

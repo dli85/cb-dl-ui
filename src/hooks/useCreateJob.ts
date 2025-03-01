@@ -55,7 +55,7 @@ const useCreateJob = () => {
       setJobErrorVisible(true);
       return;
     }
-    const reversed = issuesWorkload.reverse();
+    const reversed = [...issuesWorkload].reverse();
     const idsList = reversed.map((issue: ViewIssueItem) => {
       return issue.id;
     });
