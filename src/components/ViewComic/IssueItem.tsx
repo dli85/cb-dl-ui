@@ -6,10 +6,11 @@ import { ViewIssueItem } from "../../hooks/useViewComic";
 export interface IssueItemProps {
   issue: ViewIssueItem;
   updateIssueItem: (id: number, updates: Partial<ViewIssueItem>) => void;
+  title: string;
 }
 
 const IssueItem = (props: IssueItemProps) => {
-  const { issue, updateIssueItem } = props;
+  const { issue, updateIssueItem, title } = props;
   return (
     <Box
       border="2px solid #000"
@@ -26,7 +27,9 @@ const IssueItem = (props: IssueItemProps) => {
               updateIssueItem(issue.id, { checked: !issue.checked })
             }
           />
-          <Box>{issue.title}</Box>
+          <Box>
+            {title} {issue.title}
+          </Box>
         </HStack>
         <HStack>
           <Box>High Quality:</Box>

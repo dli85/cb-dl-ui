@@ -37,6 +37,8 @@ export interface ViewComicProps {
   getBookmarkById: (id: number) => Comic | undefined;
   containsBookmark: (id: number) => boolean;
   getIssuesById: (id: number, link: string) => void;
+  hq: boolean;
+  setHq: (n: boolean) => void;
 }
 
 const ViewComic = (props: ViewComicProps) => {
@@ -60,6 +62,8 @@ const ViewComic = (props: ViewComicProps) => {
     removeBookmark,
     containsBookmark,
     getIssuesById,
+    hq,
+    setHq,
   } = props;
   const navigate = useNavigate();
 
@@ -116,12 +120,26 @@ const ViewComic = (props: ViewComicProps) => {
           <Button onClick={() => updateAllIssueItems({ checked: false })}>
             Uncheck All
           </Button>
-          <Button onClick={() => updateAllIssueItems({ hq: true })}>
-            All high quality
-          </Button>
-          <Button onClick={() => updateAllIssueItems({ hq: false })}>
-            All low quality
-          </Button>
+          {hq ? (
+            <Button
+              onClick={() => {
+                setHq(false);
+                updateAllIssueItems({ hq: false });
+              }}
+            >
+              All low quality
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setHq(true);
+                updateAllIssueItems({ hq: true });
+              }}
+            >
+              All high quality
+            </Button>
+          )}
+
           {comic &&
             (containsBookmark(comic.id) ? (
               <Button bg="red" onClick={() => removeBookmark(comic.id)}>
@@ -147,6 +165,7 @@ const ViewComic = (props: ViewComicProps) => {
             <IssueItem
               key={issue.id}
               issue={issue}
+              title={comic!.title}
               updateIssueItem={updateIssueItem}
             />
           ))}

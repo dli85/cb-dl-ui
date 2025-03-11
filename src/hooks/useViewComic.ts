@@ -22,6 +22,8 @@ const useViewComic = () => {
   const [errorType, setErrorType] = useState<"failure" | "success">("failure");
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
+  const [hq, setHq] = useState<boolean>(false);
+
   const getIssuesById = async (id: number, link: string) => {
     const response = parseListOfIssuesResponse(await getIssuesByComicId(id));
     const comic = await getComicById(id);
@@ -47,6 +49,8 @@ const useViewComic = () => {
       setIssues(issueItems);
       setUrl(link);
       setComic(comic);
+
+      updateAllIssueItems({ hq: hq });
     }
   };
 
@@ -77,6 +81,8 @@ const useViewComic = () => {
       setIssues(issueItems);
       setUrl(link);
       setComic(comic);
+
+      updateAllIssueItems({ hq: hq });
     }
   };
 
@@ -118,6 +124,8 @@ const useViewComic = () => {
     updateAllIssueItems,
     getIssuesByLink,
     clearIssues,
+    hq,
+    setHq,
   };
 };
 

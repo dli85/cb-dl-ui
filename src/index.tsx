@@ -35,6 +35,8 @@ const App = () => {
     updateAllIssueItems,
     getIssuesByLink,
     clearIssues,
+    hq,
+    setHq,
   } = useViewComic();
 
   const {
@@ -117,6 +119,8 @@ const App = () => {
                     containsBookmark={containsBookmark}
                     clearIssues={clearIssues}
                     getIssuesById={getIssuesById}
+                    hq={hq}
+                    setHq={setHq}
                   />
                 }
               />
